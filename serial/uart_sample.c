@@ -25,7 +25,7 @@ static void serial_thread_entry(void* parameter)
     if (serial2 != RT_NULL)
     {
         rt_sem_init(&rx_sem, "rx_sem", 0, RT_IPC_FLAG_FIFO);
-        /* 设置回调函数及打开设备 */
+        /* 以读写及中断接收方式打开串口设备 */
         rt_device_open(serial2, RT_DEVICE_OFLAG_RDWR|RT_DEVICE_FLAG_INT_RX);
         /* 设置回调函数 */
         rt_device_set_rx_indicate(serial2, uart_input);
