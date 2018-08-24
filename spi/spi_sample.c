@@ -1,15 +1,11 @@
 /*
- * File      : drv_qspi_flash.c
- * This file is part of RT-Thread RTOS
- * COPYRIGHT (C) 2009 RT-Thread Develop Team
+ * Copyright (c) 2006-2018, RT-Thread Development Team
  *
- * The license and distribution terms for this file may be
- * found in the file LICENSE in this distribution or at
- * http://www.rt-thread.org/license/LICENSE
+ * SPDX-License-Identifier: Apache-2.0
  *
  * Change Logs:
  * Date           Author       Notes
- * 2018-08-17     zylx         first implementation.
+ * 2018-08-15     misonyo      first implementation.
  */
 
 #include <rtthread.h>
@@ -54,7 +50,7 @@ static void spi_sample(int argc,char *argv[])
             msg2.cs_take    = 0;
             msg2.cs_release = 1;
             msg2.next       = RT_NULL;
-            
+
             rt_spi_transfer_message(spi_dev_w25q128, &msg1);
             rt_kprintf("use method2 read w25q128 ID is:%x%x\n", id[3], id[4]);
         }

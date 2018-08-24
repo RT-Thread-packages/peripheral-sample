@@ -1,10 +1,20 @@
+/*
+ * Copyright (c) 2006-2018, RT-Thread Development Team
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2018-08-15     misonyo      first implementation.
+ */
+
 #include <rtthread.h>
 #include <rtdevice.h>
 
 /* 引脚编号，通过查看drv_gpio.c确定 */
 #define BEEP_PIN        37  /* PB2 */
-#define KEY0 	        55  /* PD8 */
-#define KEY1 	        56  /* PD9 */
+#define KEY0            55  /* PD8 */
+#define KEY1            56  /* PD9 */
 
 void beep_on(void *args)
 {

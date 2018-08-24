@@ -5,7 +5,7 @@
  *
  * Change Logs:
  * Date           Author       Notes
- * 2018-08-15     Ernest Chen  first implementation.
+ * 2018-08-15     misonyo      first implementation.
  */
 
 #include <rtthread.h>
