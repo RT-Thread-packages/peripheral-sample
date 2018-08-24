@@ -8,15 +8,10 @@
 
 | 目录             | 例程                            |
 | ---------------- | ------------------------------- |
-| block            | 块设备的使用            |
-| can              | can 设备的使用             |
-| ethernet         | ethernet 设备的使用             |
-| i2c              | i2c 设备的使用             |
-| pin              | pin 设备的使用             |
-| pwm              | pwm 设备的使用 |
-| serial           | serial 设备的使用             |
-| spi              | spi 设备的使用             |
-| usb              | usb 设备的使用 |
+| i2c              | i2c 设备的使用                  |
+| pin              | pin 设备的使用                  |
+| serial           | serial 设备的使用               |
+| spi              | spi 设备的使用                  |
 
 ### 1.2 许可证
 

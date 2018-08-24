@@ -10,15 +10,18 @@
 
 #include <rtthread.h>
 #include <rtdevice.h>
+#include <stdbool.h>
 
 #define AHT10_ADDR                  0x38
 #define AHT10_CALIBRATION_CMD       0xE1    /* 校准命令 */
 #define AHT10_NORMAL_CMD            0xA8    /* 一般命令 */
 #define AHT10_GET_DATA              0xAC    /* 获取数据命令 */
-#define I2C_BUS_NAME                "i2c1"  /* 传感器连接的I2C总线设备名称 */
+#ifndef AHT10_I2C_BUS_NAME
+#define AHT10_I2C_BUS_NAME          "i2c1"  /* 传感器连接的I2C总线设备名称 */
+#endif
 
 static struct rt_i2c_bus_device *i2c_bus = RT_NULL;
-static rt_uint8_t init_flag = 0;      /* 0:传感器没有初始化，1：传感器已经初始化 */
+static bool initialized = false;                 /* 传感器初始化状态 */
 
 /* 写 传感器寄存器 */
 static rt_err_t write_reg(struct rt_i2c_bus_device *bus, rt_uint8_t reg, rt_uint8_t *data)
@@ -71,39 +74,39 @@ static void aht10_init(void)
     rt_uint8_t temp[2] = {0, 0};
 
     /* 查找I2C总线设备，获取I2C总线设备句柄 */
-    i2c_bus = rt_i2c_bus_device_find(I2C_BUS_NAME);
+    i2c_bus = rt_i2c_bus_device_find(AHT10_I2C_BUS_NAME);
 
     if (i2c_bus == RT_NULL)
     {
-        rt_kprintf("can't find %s device", I2C_BUS_NAME);
+        rt_kprintf("can't find %s device", AHT10_I2C_BUS_NAME);
     }
     else
     {
         write_reg(i2c_bus, AHT10_NORMAL_CMD, temp);
-        rt_thread_delay(rt_tick_from_millisecond(600));     /* at least 300 ms */
+        rt_thread_mdelay(600);     /* at least 300 ms */
 
         temp[0] = 0x08;
         temp[1] = 0x00;
         write_reg(i2c_bus, AHT10_CALIBRATION_CMD, temp); 
-        rt_thread_delay(rt_tick_from_millisecond(600));     /* at least 300 ms */
+        rt_thread_mdelay(600);     /* at least 300 ms */
 
-        init_flag = 1;
+        initialized = true;
     }
 }
 
-static void i2c_sample(void)
+static void i2c_aht10_sample(void)
 {
     float humidity, temperature;
 
     humidity = 0.0;
     temperature = 0.0;
 
-    if (0 == init_flag)
+    if (!initialized)
     {
         /* 传感器初始化 */
         aht10_init();
     }
-    if (1 == init_flag)
+    if (initialized)
     {
         /* 读取温湿度数据 */
         read_temp_humi(&temperature, &humidity);
@@ -113,11 +116,8 @@ static void i2c_sample(void)
     }
     else
     {
-        rt_kprintf("init sensor failed\n");
+        rt_kprintf("initialize sensor failed\n");
     }
 }
 /* 导出到 msh 命令列表中 */
-MSH_CMD_EXPORT(i2c_sample, i2c device sample);
-
-
-
+MSH_CMD_EXPORT(i2c_aht10_sample, i2c aht10 sample);
