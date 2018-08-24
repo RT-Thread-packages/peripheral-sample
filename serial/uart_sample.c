@@ -7,6 +7,12 @@
  * Date           Author       Notes
  * 2018-08-15     misonyo      first implementation.
  */
+/* 
+ * 程序清单：这是一个 串口 设备使用例程
+ * 例程导出了 uart_sample 命令到控制终端
+ * 命令调用格式：uart_sample
+ * 程序功能：通过串口输出字符串"hello RT-Thread!"，然后错位输出输入的字符
+*/
 
 #include <rtthread.h>
 

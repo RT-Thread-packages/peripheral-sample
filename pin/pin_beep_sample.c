@@ -7,6 +7,12 @@
  * Date           Author       Notes
  * 2018-08-15     misonyo      first implementation.
  */
+/* 
+ * 程序清单：这是一个 PIN 设备使用例程
+ * 例程导出了 pin_beep_sample 命令到控制终端
+ * 命令调用格式：pin_beep_sample
+ * 程序功能：通过按键控制蜂鸣器对应引脚的电平状态控制蜂鸣器
+*/
 
 #include <rtthread.h>
 #include <rtdevice.h>

@@ -7,6 +7,12 @@
  * Date           Author       Notes
  * 2018-08-15     misonyo      first implementation.
  */
+/* 
+ * 程序清单：这是一个 SPI 设备使用例程
+ * 例程导出了 spi_w25q_sample 命令到控制终端
+ * 命令调用格式：spi_w25q_sample
+ * 程序功能：通过SPI设备读取 w25q 的 ID 数据
+*/
 
 #include <rtthread.h>
 #include <rtdevice.h>

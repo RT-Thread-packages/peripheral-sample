@@ -7,23 +7,29 @@
  * Date           Author       Notes
  * 2018-08-15     misonyo      first implementation.
  */
+/* 
+ * 程序清单：这是一个 I2C 设备使用例程
+ * 例程导出了 i2c_aht10_sample 命令到控制终端
+ * 命令调用格式：i2c_aht10_sample
+ * 程序功能：通过 I2C 设备读取温湿度传感器 aht10 的温湿度数据并打印
+*/
 
 #include <rtthread.h>
 #include <rtdevice.h>
 #include <stdbool.h>
 
+#ifndef AHT10_I2C_BUS_NAME
+#define AHT10_I2C_BUS_NAME          "i2c1"  /* 传感器连接的I2C总线设备名称 */
+#endif
 #define AHT10_ADDR                  0x38
 #define AHT10_CALIBRATION_CMD       0xE1    /* 校准命令 */
 #define AHT10_NORMAL_CMD            0xA8    /* 一般命令 */
 #define AHT10_GET_DATA              0xAC    /* 获取数据命令 */
-#ifndef AHT10_I2C_BUS_NAME
-#define AHT10_I2C_BUS_NAME          "i2c1"  /* 传感器连接的I2C总线设备名称 */
-#endif
 
 static struct rt_i2c_bus_device *i2c_bus = RT_NULL;
-static bool initialized = false;                 /* 传感器初始化状态 */
+static bool initialized = false;           /* 传感器初始化状态 */
 
-/* 写 传感器寄存器 */
+/* 写传感器寄存器 */
 static rt_err_t write_reg(struct rt_i2c_bus_device *bus, rt_uint8_t reg, rt_uint8_t *data)
 {
     rt_uint8_t buf[3];
@@ -39,7 +45,7 @@ static rt_err_t write_reg(struct rt_i2c_bus_device *bus, rt_uint8_t reg, rt_uint
         return -RT_ERROR;
 }
 
-/* 读 传感器寄存器数据 */
+/* 读传感器寄存器数据 */
 static rt_err_t read_regs(struct rt_i2c_bus_device *bus, rt_uint8_t len, rt_uint8_t *buf)
 {
     struct rt_i2c_msg msgs;
