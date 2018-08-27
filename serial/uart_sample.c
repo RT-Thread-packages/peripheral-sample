@@ -38,7 +38,7 @@ static void serial_thread_entry(void* parameter)
     char str[] = "hello RT-Thread!\r\n";
 
     /* 查找系统中的串口设备 */
-    serial = rt_device_find(UART_NAME);
+    serial = rt_device_find(SAMPLE_UART_NAME);
     
     if (serial != RT_NULL)
     {
