@@ -42,7 +42,7 @@ void beep_off(void *args)
     rt_pin_write(BEEP_PIN_NUM, PIN_LOW);
 }
 
-static void pin_sample(void)
+static void pin_beep_sample(void)
 {
     /* 按键0引脚为输入模式 */
     rt_pin_mode(KEY0_PIN_NUM, PIN_MODE_INPUT_PULLUP);

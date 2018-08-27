@@ -26,7 +26,7 @@
 #define AHT10_GET_DATA              0xAC    /* 获取数据命令 */
 
 static struct rt_i2c_bus_device *i2c_bus = RT_NULL;
-static bool initialized = RT_FALSE;        /* 传感器初始化状态 */
+static rt_bool_t initialized = RT_FALSE;        /* 传感器初始化状态 */
 
 /* 写传感器寄存器 */
 static rt_err_t write_reg(struct rt_i2c_bus_device *bus, rt_uint8_t reg, rt_uint8_t *data)

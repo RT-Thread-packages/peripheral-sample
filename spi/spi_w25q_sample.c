@@ -21,7 +21,7 @@
 #define W25Q_SPI_DEVICE_NAME     "qspi10"
 #endif
 
-static void spi_sample(int argc,char *argv[])
+static void spi_w25q_sample(void)
 {
     struct rt_spi_device *spi_dev_w25q;
     rt_uint8_t w25x_read_id = 0x90;
