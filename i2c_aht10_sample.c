@@ -10,16 +10,15 @@
 /* 
  * 程序清单：这是一个 I2C 设备使用例程
  * 例程导出了 i2c_aht10_sample 命令到控制终端
- * 命令调用格式：i2c_aht10_sample
+ * 命令调用格式：i2c_aht10_sample i2c1
+ * 命令解释：命令第二个参数是要使用的I2C总线设备名称，为空则使用默认的I2C总线设备
  * 程序功能：通过 I2C 设备读取温湿度传感器 aht10 的温湿度数据并打印
 */
 
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#ifndef AHT10_I2C_BUS_NAME
 #define AHT10_I2C_BUS_NAME          "i2c1"  /* 传感器连接的I2C总线设备名称 */
-#endif
 #define AHT10_ADDR                  0x38
 #define AHT10_CALIBRATION_CMD       0xE1    /* 校准命令 */
 #define AHT10_NORMAL_CMD            0xA8    /* 一般命令 */
@@ -74,16 +73,16 @@ static void read_temp_humi(float *cur_temp,float *cur_humi)
     *cur_temp = ((temp[3] & 0xf) << 16 | temp[4] << 8 | temp[5]) * 200.0 / (1 << 20) - 50;
 }
 
-static void aht10_init(void)
+static void aht10_init(const char *name)
 {
     rt_uint8_t temp[2] = {0, 0};
 
     /* 查找I2C总线设备，获取I2C总线设备句柄 */
-    i2c_bus = rt_i2c_bus_device_find(AHT10_I2C_BUS_NAME);
+    i2c_bus = rt_i2c_bus_device_find(name);
 
     if (i2c_bus == RT_NULL)
     {
-        rt_kprintf("can't find %s device", AHT10_I2C_BUS_NAME);
+        rt_kprintf("can't find %s device!\n", name);
     }
     else
     {
@@ -99,17 +98,27 @@ static void aht10_init(void)
     }
 }
 
-static void i2c_aht10_sample(void)
+static void i2c_aht10_sample(int argc,char *argv[])
 {
     float humidity, temperature;
+    char name[RT_NAME_MAX];
 
     humidity = 0.0;
     temperature = 0.0;
 
+    if (argc == 2)
+    {
+        rt_strncpy(name, argv[1], RT_NAME_MAX);
+    }
+    else
+    {
+        rt_strncpy(name, AHT10_I2C_BUS_NAME, RT_NAME_MAX);
+    }
+    rt_kprintf("name is:%s!\n",name);
     if (!initialized)
     {
         /* 传感器初始化 */
-        aht10_init();
+        aht10_init(name);
     }
     if (initialized)
     {
@@ -121,7 +130,7 @@ static void i2c_aht10_sample(void)
     }
     else
     {
-        rt_kprintf("initialize sensor failed\n");
+        rt_kprintf("i2c sample run failed! initialize sensor failed!\n");
     }
 }
 /* 导出到 msh 命令列表中 */

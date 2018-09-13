@@ -10,18 +10,18 @@
 /* 
  * 程序清单：这是一个 串口 设备使用例程
  * 例程导出了 uart_sample 命令到控制终端
- * 命令调用格式：uart_sample
+ * 命令调用格式：uart_sample uart2
+ * 命令解释：命令第二个参数是要使用的串口设备名称，为空则使用默认的串口设备
  * 程序功能：通过串口输出字符串"hello RT-Thread!"，然后错位输出输入的字符
 */
 
 #include <rtthread.h>
 
-#ifndef SAMPLE_UART_NAME
 #define SAMPLE_UART_NAME       "uart2"
-#endif
+
 /* 用于接收消息的信号量 */
 static struct rt_semaphore rx_sem;
-
+static char uart_name[RT_NAME_MAX];
 /* 接收数据回调函数 */
 static rt_err_t uart_input(rt_device_t dev, rt_size_t size)
 {
@@ -38,7 +38,7 @@ static void serial_thread_entry(void* parameter)
     char str[] = "hello RT-Thread!\r\n";
 
     /* 查找系统中的串口设备 */
-    serial = rt_device_find(SAMPLE_UART_NAME);
+    serial = rt_device_find(uart_name);
     
     if (serial != RT_NULL)
     {
@@ -65,12 +65,21 @@ static void serial_thread_entry(void* parameter)
     }
     else
     {
-        rt_kprintf("open serial failed!\n");
+        rt_kprintf("uart sample run failed! can't find %s device!\n",uart_name);
     }
 }
 
-static void uart_sample(void)
+static void uart_sample(int argc,char *argv[])
 {
+    if (argc == 2)
+    {
+        rt_strncpy(uart_name, argv[1], RT_NAME_MAX);
+    }
+    else
+    {
+        rt_strncpy(uart_name, SAMPLE_UART_NAME, RT_NAME_MAX);
+    }
+    rt_kprintf("name is:%s!\n",uart_name);
     /* 创建 serial 线程 */
     rt_thread_t thread = rt_thread_create("serial",serial_thread_entry, RT_NULL, 1024, 25, 10);
     /* 创建成功则启动线程 */
