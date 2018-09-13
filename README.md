@@ -8,10 +8,10 @@
 
 | 文件             | 说明                            |
 | ---------------- | ------------------------------- |
-| i2c_aht10_sample.c       | i2c 设备的使用例程                |
-| pin_beep_sample.c        | pin 设备的使用例程                 |
-| uart_sample.c            | serial 设备的使用例程             |
-| spi_w25q_sample.c        | spi 设备的使用例程                  |
+| i2c_aht10_sample.c       | 使用 i2c 设备获取 aht10 温湿度传感器数据  |
+| pin_beep_sample.c        | 使用 pin 设备控制蜂鸣器			|
+| uart_sample.c            | 使用 serial 设备收发数据         |
+| spi_w25q_sample.c        | 使用 spi 设备读取 W25Q ID       |
 
 ### 1.2 许可证
 
