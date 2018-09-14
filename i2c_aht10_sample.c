@@ -114,7 +114,7 @@ static void i2c_aht10_sample(int argc,char *argv[])
     {
         rt_strncpy(name, AHT10_I2C_BUS_NAME, RT_NAME_MAX);
     }
-    rt_kprintf("name is:%s!\n",name);
+
     if (!initialized)
     {
         /* 传感器初始化 */
@@ -130,7 +130,7 @@ static void i2c_aht10_sample(int argc,char *argv[])
     }
     else
     {
-        rt_kprintf("i2c sample run failed! initialize sensor failed!\n");
+        rt_kprintf("initialize sensor failed!\n");
     }
 }
 /* 导出到 msh 命令列表中 */

@@ -35,7 +35,7 @@ static void spi_w25q_sample(int argc,char *argv[])
     {
         rt_strncpy(name, W25Q_SPI_DEVICE_NAME, RT_NAME_MAX);
     }
-    rt_kprintf("name is:%s!\n",name);
+
     /* 查找 spi 设备获取设备句柄 */
     spi_dev_w25q = (struct rt_spi_device *)rt_device_find(name);
     if (!spi_dev_w25q)

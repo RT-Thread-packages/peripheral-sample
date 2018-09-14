@@ -79,7 +79,7 @@ static void uart_sample(int argc,char *argv[])
     {
         rt_strncpy(uart_name, SAMPLE_UART_NAME, RT_NAME_MAX);
     }
-    rt_kprintf("name is:%s!\n",uart_name);
+
     /* 创建 serial 线程 */
     rt_thread_t thread = rt_thread_create("serial",serial_thread_entry, RT_NULL, 1024, 25, 10);
     /* 创建成功则启动线程 */
