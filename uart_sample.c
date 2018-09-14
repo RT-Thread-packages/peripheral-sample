@@ -39,7 +39,7 @@ static void serial_thread_entry(void* parameter)
 
     /* 查找系统中的串口设备 */
     serial = rt_device_find(uart_name);
-    
+
     if (serial != RT_NULL)
     {
         rt_sem_init(&rx_sem, "rx_sem", 0, RT_IPC_FLAG_FIFO);
@@ -58,9 +58,9 @@ static void serial_thread_entry(void* parameter)
                 /* 阻塞等待接收信号量，等到信号量后再次读取数据 */
                 rt_sem_take(&rx_sem, RT_WAITING_FOREVER);
             }
-        /* 读取到的数据通过串口错位输出 */
-        ch = ch + 1;
-        rt_device_write(serial, 0, &ch, 1);
+            /* 读取到的数据通过串口错位输出 */
+            ch = ch + 1;
+            rt_device_write(serial, 0, &ch, 1);
         }
     }
     else
@@ -79,7 +79,7 @@ static void uart_sample(int argc,char *argv[])
     {
         rt_strncpy(uart_name, SAMPLE_UART_NAME, RT_NAME_MAX);
     }
-    rt_kprintf("name is:%s!\n",uart_name);
+
     /* 创建 serial 线程 */
     rt_thread_t thread = rt_thread_create("serial",serial_thread_entry, RT_NULL, 1024, 25, 10);
     /* 创建成功则启动线程 */
