@@ -86,13 +86,13 @@ static void aht10_init(const char *name)
     }
     else
     {
-        rt_thread_mdelay(2000);
         write_reg(i2c_bus, AHT10_NORMAL_CMD, temp);
+        rt_thread_mdelay(400);
 
         temp[0] = 0x08;
         temp[1] = 0x00;
         write_reg(i2c_bus, AHT10_CALIBRATION_CMD, temp); 
-
+        rt_thread_mdelay(400);
         initialized = RT_TRUE;
     }
 }
