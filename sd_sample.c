@@ -33,13 +33,13 @@ void fill_buffer(rt_uint8_t *buff, rt_uint32_t buff_length)
 }
 
 static rt_err_t sd_sample(int argc, char *argv[])
-{  
-	rt_err_t result;
+{
+    rt_err_t result;
     rt_device_t sd_device;
     char sd_name[RT_NAME_MAX];
     rt_uint8_t* write_buff, *read_buff;
     struct rt_device_blk_geometry geo;
-	rt_uint8_t block_num;
+    rt_uint8_t block_num;
     /* 判断命令行参数是否给定了设备名称 */
     if (argc == 2)
     {
@@ -63,7 +63,7 @@ static rt_err_t sd_sample(int argc, char *argv[])
         rt_kprintf("open device %s failed!\n", sd_name);
         return result;
     }
-    
+
     rt_memset(&geo, 0, sizeof(geo));
     /* 获取块设备信息 */
     result = rt_device_control(sd_device, RT_DEVICE_CTRL_BLK_GETGEOME, &geo);
@@ -90,10 +90,10 @@ static rt_err_t sd_sample(int argc, char *argv[])
         rt_free(read_buff);
         return RT_ERROR;
     }
-    
+
     /* 填充写数据缓冲区，为写操作做准备 */
     fill_buffer(write_buff, geo.block_size);
-    
+
     /* 把写数据缓冲的数据写入SD卡中，大小为一个块，size参数以块为单位 */
     block_num = rt_device_write(sd_device, 0, write_buff, 1);
     if (1 != block_num)
@@ -107,7 +107,7 @@ static rt_err_t sd_sample(int argc, char *argv[])
     {
         rt_kprintf("read %s device failed!\n",sd_name);
     }
-    
+
     /* 比较写数据缓冲区和读数据缓冲区的内容是否完全一致 */
     if (rt_memcmp(write_buff, read_buff, geo.block_size) == 0)
     {
@@ -120,7 +120,7 @@ static rt_err_t sd_sample(int argc, char *argv[])
    /* 释放缓冲区空间 */ 
     rt_free(read_buff);
     rt_free(write_buff);
-    
+
     return RT_EOK;
 }
 /* 导出到 msh 命令列表中 */
