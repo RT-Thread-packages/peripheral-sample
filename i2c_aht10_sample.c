@@ -31,13 +31,19 @@ static rt_bool_t initialized = RT_FALSE;        /* 传感器初始化状态 */
 static rt_err_t write_reg(struct rt_i2c_bus_device *bus, rt_uint8_t reg, rt_uint8_t *data)
 {
     rt_uint8_t buf[3];
+    struct rt_i2c_msg msgs;
 
     buf[0] = reg; //cmd
     buf[1] = data[0];
     buf[2] = data[1];
 
+    msgs.addr = AHT10_ADDR;
+    msgs.flags = RT_I2C_WR;
+    msgs.buf = buf;
+    msgs.len = 3;
+    
     /* 调用I2C设备接口发送数据 */
-    if (rt_i2c_master_send(bus, AHT10_ADDR, 0, buf, 3) == 3)
+    if (rt_i2c_transfer(bus, &msgs, 1) == 1)
         return RT_EOK;
     else
         return -RT_ERROR;
@@ -53,7 +59,7 @@ static rt_err_t read_regs(struct rt_i2c_bus_device *bus, rt_uint8_t len, rt_uint
     msgs.buf = buf;
     msgs.len = len;
 
-    /* 调用I2C设备接口发送数据 */
+    /* 调用I2C设备接口接收数据 */
     if (rt_i2c_transfer(bus, &msgs, 1) == 1)
         return RT_EOK;
     else
@@ -78,7 +84,7 @@ static void aht10_init(const char *name)
     rt_uint8_t temp[2] = {0, 0};
 
     /* 查找I2C总线设备，获取I2C总线设备句柄 */
-    i2c_bus = rt_i2c_bus_device_find(name);
+    i2c_bus = (struct rt_i2c_bus_device *)rt_device_find(name);
 
     if (i2c_bus == RT_NULL)
     {
