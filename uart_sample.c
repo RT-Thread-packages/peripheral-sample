@@ -7,7 +7,7 @@
  * Date           Author       Notes
  * 2018-08-15     misonyo      first implementation.
  */
-/* 
+/*
  * 程序清单：这是一个 串口 设备使用例程
  * 例程导出了 uart_sample 命令到控制终端
  * 命令调用格式：uart_sample uart2
@@ -31,7 +31,7 @@ static rt_err_t uart_input(rt_device_t dev, rt_size_t size)
     return RT_EOK;
 }
 
-static void serial_thread_entry(void* parameter)
+static void serial_thread_entry(void *parameter)
 {
     char ch;
     rt_device_t serial;
@@ -44,12 +44,12 @@ static void serial_thread_entry(void* parameter)
     {
         rt_sem_init(&rx_sem, "rx_sem", 0, RT_IPC_FLAG_FIFO);
         /* 以读写及中断接收方式打开串口设备 */
-        rt_device_open(serial, RT_DEVICE_OFLAG_RDWR|RT_DEVICE_FLAG_INT_RX);
+        rt_device_open(serial, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
         /* 设置接收回调函数 */
         rt_device_set_rx_indicate(serial, uart_input);
         /* 发送字符串 */
         rt_device_write(serial, 0, str, (sizeof(str) - 1));
-        
+
         while (1)
         {
             /* 从串口读取一个字节的数据，没有读取到则等待接收信号量 */
@@ -65,11 +65,11 @@ static void serial_thread_entry(void* parameter)
     }
     else
     {
-        rt_kprintf("uart sample run failed! can't find %s device!\n",uart_name);
+        rt_kprintf("uart sample run failed! can't find %s device!\n", uart_name);
     }
 }
 
-static void uart_sample(int argc,char *argv[])
+static void uart_sample(int argc, char *argv[])
 {
     if (argc == 2)
     {
@@ -81,9 +81,9 @@ static void uart_sample(int argc,char *argv[])
     }
 
     /* 创建 serial 线程 */
-    rt_thread_t thread = rt_thread_create("serial",serial_thread_entry, RT_NULL, 1024, 25, 10);
+    rt_thread_t thread = rt_thread_create("serial", serial_thread_entry, RT_NULL, 1024, 25, 10);
     /* 创建成功则启动线程 */
-    if (thread!= RT_NULL)
+    if (thread != RT_NULL)
     {
         rt_thread_startup(thread);
     }
