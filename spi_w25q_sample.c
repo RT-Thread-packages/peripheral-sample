@@ -7,7 +7,7 @@
  * Date           Author       Notes
  * 2018-08-15     misonyo      first implementation.
  */
-/* 
+/*
  * 程序清单：这是一个 SPI 设备使用例程
  * 例程导出了 spi_w25q_sample 命令到控制终端
  * 命令调用格式：spi_w25q_sample spi10
@@ -20,7 +20,7 @@
 
 #define W25Q_SPI_DEVICE_NAME     "qspi10"
 
-static void spi_w25q_sample(int argc,char *argv[])
+static void spi_w25q_sample(int argc, char *argv[])
 {
     struct rt_spi_device *spi_dev_w25q;
     char name[RT_NAME_MAX];
@@ -49,7 +49,7 @@ static void spi_w25q_sample(int argc,char *argv[])
         rt_kprintf("use rt_spi_send_then_recv() read w25q ID is:%x%x\n", id[3], id[4]);
 
         /* 方式2：使用 rt_spi_transfer_message()发送命令读取ID */
-        struct rt_spi_message msg1,msg2;
+        struct rt_spi_message msg1, msg2;
 
         msg1.send_buf   = &w25x_read_id;
         msg1.recv_buf   = RT_NULL;

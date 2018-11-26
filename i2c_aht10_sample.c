@@ -7,7 +7,7 @@
  * Date           Author       Notes
  * 2018-08-15     misonyo      first implementation.
  */
-/* 
+/*
  * 程序清单：这是一个 I2C 设备使用例程
  * 例程导出了 i2c_aht10_sample 命令到控制终端
  * 命令调用格式：i2c_aht10_sample i2c1
@@ -41,7 +41,7 @@ static rt_err_t write_reg(struct rt_i2c_bus_device *bus, rt_uint8_t reg, rt_uint
     msgs.flags = RT_I2C_WR;
     msgs.buf = buf;
     msgs.len = 3;
-    
+
     /* 调用I2C设备接口发送数据 */
     if (rt_i2c_transfer(bus, &msgs, 1) == 1)
         return RT_EOK;
@@ -66,7 +66,7 @@ static rt_err_t read_regs(struct rt_i2c_bus_device *bus, rt_uint8_t len, rt_uint
         return -RT_ERROR;
 }
 
-static void read_temp_humi(float *cur_temp,float *cur_humi)
+static void read_temp_humi(float *cur_temp, float *cur_humi)
 {
     rt_uint8_t temp[6];
 
@@ -97,13 +97,13 @@ static void aht10_init(const char *name)
 
         temp[0] = 0x08;
         temp[1] = 0x00;
-        write_reg(i2c_bus, AHT10_CALIBRATION_CMD, temp); 
+        write_reg(i2c_bus, AHT10_CALIBRATION_CMD, temp);
         rt_thread_mdelay(400);
         initialized = RT_TRUE;
     }
 }
 
-static void i2c_aht10_sample(int argc,char *argv[])
+static void i2c_aht10_sample(int argc, char *argv[])
 {
     float humidity, temperature;
     char name[RT_NAME_MAX];

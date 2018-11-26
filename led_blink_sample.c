@@ -7,7 +7,7 @@
  * Date           Author       Notes
  * 2018-09-25     misonyo      first edition.
  */
-/* 
+/*
  * 程序清单：这是一个通过PIN脚控制LED亮灭的使用例程
  * 例程导出了 led_sample 命令到控制终端
  * 命令调用格式：led_sample 41
@@ -47,7 +47,7 @@ static void led_entry(void *parameter)
     }
 }
 
-static void led_sample(int argc,char *argv[])
+static void led_sample(int argc, char *argv[])
 {
     rt_thread_t tid;
 
@@ -65,7 +65,7 @@ static void led_sample(int argc,char *argv[])
                            led_entry,
                            RT_NULL,
                            512,
-                           RT_THREAD_PRIORITY_MAX/3,
+                           RT_THREAD_PRIORITY_MAX / 3,
                            20);
     if (tid != RT_NULL)
     {
