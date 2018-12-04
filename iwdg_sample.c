@@ -11,7 +11,7 @@
  * 程序清单：这是一个独立看门狗设备使用例程
  * 例程导出了 iwdg_sample 命令到控制终端
  * 命令调用格式：iwdg_sample iwg
- * 命令解释：命令第二个参数是要使用的看门狗设备名称，为空则使用例程默认的看门狗设备
+ * 命令解释：命令第二个参数是要使用的看门狗设备名称，为空则使用例程默认的看门狗设备。
  * 程序功能：程序通过设备名称查找看门狗设备，然后初始化设备并设置看门狗设备溢出时间。
  *           然后设置空闲线程回调函数，在回调函数里会喂狗。
 */
@@ -32,7 +32,7 @@ static void idle_hook(void)
 static int iwdg_sample(int argc, char *argv[])
 {
     rt_err_t result = RT_EOK;
-    rt_uint32_t timeout = 1000;    /* 超时时间为1000ms*/
+    rt_uint32_t timeout = 1000;    /* 溢出时间 */
     char device_name[RT_NAME_MAX];
 
     /* 判断命令行参数是否给定了设备名称 */

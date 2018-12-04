@@ -19,7 +19,7 @@
 #include <rtdevice.h>
 
 #define AHT10_I2C_BUS_NAME          "i2c1"  /* 传感器连接的I2C总线设备名称 */
-#define AHT10_ADDR                  0x38
+#define AHT10_ADDR                  0x38    /* 从机地址 */
 #define AHT10_CALIBRATION_CMD       0xE1    /* 校准命令 */
 #define AHT10_NORMAL_CMD            0xA8    /* 一般命令 */
 #define AHT10_GET_DATA              0xAC    /* 获取数据命令 */
@@ -42,7 +42,7 @@ static rt_err_t write_reg(struct rt_i2c_bus_device *bus, rt_uint8_t reg, rt_uint
     msgs.buf = buf;
     msgs.len = 3;
 
-    /* 调用I2C设备接口发送数据 */
+    /* 调用I2C设备接口传输数据 */
     if (rt_i2c_transfer(bus, &msgs, 1) == 1)
         return RT_EOK;
     else
@@ -59,7 +59,7 @@ static rt_err_t read_regs(struct rt_i2c_bus_device *bus, rt_uint8_t len, rt_uint
     msgs.buf = buf;
     msgs.len = len;
 
-    /* 调用I2C设备接口接收数据 */
+    /* 调用I2C设备接口传输数据 */
     if (rt_i2c_transfer(bus, &msgs, 1) == 1)
         return RT_EOK;
     else
