@@ -31,7 +31,7 @@ static void idle_hook(void)
 
 static int iwdg_sample(int argc, char *argv[])
 {
-    rt_err_t result = RT_EOK;
+    rt_err_t ret = RT_EOK;
     rt_uint32_t timeout = 1000;    /* 溢出时间 */
     char device_name[RT_NAME_MAX];
 
@@ -52,15 +52,15 @@ static int iwdg_sample(int argc, char *argv[])
         return RT_ERROR;
     }
     /* 初始化设备 */
-    result = rt_device_init(wdg_dev);
-    if (result != RT_EOK)
+    ret = rt_device_init(wdg_dev);
+    if (ret != RT_EOK)
     {
         rt_kprintf("initialize %s failed!\n", device_name);
         return RT_ERROR;
     }
     /* 设置看门狗溢出时间 */
-    result = rt_device_control(wdg_dev, RT_DEVICE_CTRL_WDT_SET_TIMEOUT, (void *)timeout);
-    if (result != RT_EOK)
+    ret = rt_device_control(wdg_dev, RT_DEVICE_CTRL_WDT_SET_TIMEOUT, (void *)timeout);
+    if (ret != RT_EOK)
     {
         rt_kprintf("set %s timeout failed!\n", device_name);
         return RT_ERROR;
@@ -68,7 +68,7 @@ static int iwdg_sample(int argc, char *argv[])
     /* 设置空闲线程回调函数 */
     rt_thread_idle_sethook(idle_hook);
 
-    return result;
+    return ret;
 }
 /* 导出到 msh 命令列表中 */
 MSH_CMD_EXPORT(iwdg_sample, iwdg sample);
