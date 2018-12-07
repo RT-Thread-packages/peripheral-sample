@@ -8,7 +8,7 @@
  * 2018-09-25     misonyo      first edition.
  */
 /*
- * 程序清单：这是一个通过SD卡设备的使用例程
+ * 程序清单：这是一个SD卡设备的使用例程
  * 例程导出了 sd_sample 命令到控制终端
  * 命令调用格式：sd_sample sd0
  * 命令解释：命令第二个参数是要使用的SD设备的名称，为空则使用例程默认的SD设备。
@@ -32,9 +32,9 @@ void fill_buffer(rt_uint8_t *buff, rt_uint32_t buff_length)
     }
 }
 
-static rt_err_t sd_sample(int argc, char *argv[])
+static int sd_sample(int argc, char *argv[])
 {
-    rt_err_t result;
+    rt_err_t ret;
     rt_device_t sd_device;
     char sd_name[RT_NAME_MAX];
     rt_uint8_t *write_buff, *read_buff;
@@ -57,20 +57,20 @@ static rt_err_t sd_sample(int argc, char *argv[])
         return RT_ERROR;
     }
     /* 打开设备 */
-    result = rt_device_open(sd_device, RT_DEVICE_OFLAG_RDWR);
-    if (result != RT_EOK)
+    ret = rt_device_open(sd_device, RT_DEVICE_OFLAG_RDWR);
+    if (ret != RT_EOK)
     {
         rt_kprintf("open device %s failed!\n", sd_name);
-        return result;
+        return ret;
     }
 
     rt_memset(&geo, 0, sizeof(geo));
     /* 获取块设备信息 */
-    result = rt_device_control(sd_device, RT_DEVICE_CTRL_BLK_GETGEOME, &geo);
-    if (result != RT_EOK)
+    ret = rt_device_control(sd_device, RT_DEVICE_CTRL_BLK_GETGEOME, &geo);
+    if (ret != RT_EOK)
     {
         rt_kprintf("control device %s failed!\n", sd_name);
-        return result;
+        return ret;
     }
     rt_kprintf("device information:\n");
     rt_kprintf("sector  size : %d byte\n", geo.bytes_per_sector);

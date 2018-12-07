@@ -47,9 +47,10 @@ static void led_entry(void *parameter)
     }
 }
 
-static void led_sample(int argc, char *argv[])
+static int led_sample(int argc, char *argv[])
 {
     rt_thread_t tid;
+    rt_err_t ret = RT_EOK;
 
     /* 判断命令行参数是否给定了PIN脚编号 */
     if (argc == 2)
@@ -71,6 +72,12 @@ static void led_sample(int argc, char *argv[])
     {
         rt_thread_startup(tid);
     }
+    else
+    {
+        ret = RT_ERROR;
+    }
+
+    return ret;
 }
 /* 导出到 msh 命令列表中 */
 MSH_CMD_EXPORT(led_sample, led sample);

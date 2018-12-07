@@ -88,7 +88,7 @@ static int pwm_led_sample(int argc, char *argv[])
         rt_thread_startup(tid);
     }
 
-    return 0;
+    return RT_EOK;
 }
 /* 导出到 msh 命令列表中 */
 MSH_CMD_EXPORT(pwm_led_sample, pwm sample);
