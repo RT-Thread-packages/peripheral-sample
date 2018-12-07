@@ -6,11 +6,32 @@ include_path = [cwd]
 
 # add kernel samples.
 
+if GetDepend('PERIPHERAL_SAMPLES_USING_ADC'):
+    src += ['adc_vol_sample.c']
+
+if GetDepend('PERIPHERAL_SAMPLES_USING_HWTIMER'):
+    src += ['hwtimer_sample.c']
+
 if GetDepend('PERIPHERAL_SAMPLES_USING_I2C'):
     src += ['i2c_aht10_sample.c']
 
+if GetDepend('PERIPHERAL_SAMPLES_USING_IWDG'):
+    src += ['iwdg_sample.c']
+
+if GetDepend('PERIPHERAL_SAMPLES_USING_LED_BLINK'):
+    src += ['led_blink_sample.c']
+
 if GetDepend('PERIPHERAL_SAMPLES_USING_PIN'):
     src += Glob('pin_beep_sample.c')
+
+if GetDepend('PERIPHERAL_SAMPLES_USING_PWM'):
+    src += ['pwm_led_sample.c']
+
+if GetDepend('PERIPHERAL_SAMPLES_USING_RTC'):
+    src += ['rtc_sample.c']
+
+if GetDepend('PERIPHERAL_SAMPLES_USING_SD'):
+    src += ['sd_sample.c']
 
 if GetDepend('PERIPHERAL_SAMPLES_USING_SERIAL'):
     src += Glob('uart_sample.c')
