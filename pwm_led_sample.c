@@ -22,22 +22,16 @@
 #define PWM_DEV_NAME        "pwm3"
 #define PWM_DEV_CHANNEL     4
 
+struct rt_device_pwm *pwm_dev;
+
 static void pwm_led_entry(void *parameter)
 {
     rt_uint32_t period, pulse, dir;
-    struct rt_device_pwm *pwm_dev;
-    /* 设置LED引脚脚模式为输出 */
-    rt_pin_mode(LED_PIN_NUM, PIN_MODE_OUTPUT);
-    /* 拉高LED引脚 */
-    rt_pin_write(LED_PIN_NUM, PIN_HIGH);
 
-    pwm_dev = (struct rt_device_pwm *)rt_device_find(PWM_DEV_NAME);
-
-    rt_pwm_enable(pwm_dev, PWM_DEV_CHANNEL);
-
-    period = 500000;    /* 0.5ms周期，单位为纳秒ns */
+    period = 500000;    /* 周期为0.5ms，单位为纳秒ns */
     dir = 1;            /* PWM脉冲宽度值的增减方向 */
     pulse = 0;          /* PWM脉冲宽度值，单位为纳秒ns */
+
     while (1)
     {
         rt_thread_mdelay(50);
@@ -49,7 +43,7 @@ static void pwm_led_entry(void *parameter)
         {
             pulse -= 5000;      /* 从最大值开始每次减少5000ns */
         }
-        if (pulse >= 500000)
+        if (pulse >= period)
         {
             dir = 0;
         }
@@ -58,13 +52,30 @@ static void pwm_led_entry(void *parameter)
             dir = 1;
         }
 
+        /* 设置PWM周期和脉冲宽度 */
         rt_pwm_set(pwm_dev, PWM_DEV_CHANNEL, period, pulse);
     }
 }
 
-static void pwm_led_sample(int argc, char *argv[])
+static int pwm_led_sample(int argc, char *argv[])
 {
     rt_thread_t tid;
+
+    /* 设置LED引脚脚模式为输出 */
+    rt_pin_mode(LED_PIN_NUM, PIN_MODE_OUTPUT);
+    /* 拉高LED引脚 */
+    rt_pin_write(LED_PIN_NUM, PIN_HIGH);
+
+    /* 查找设备 */
+    pwm_dev = (struct rt_device_pwm *)rt_device_find(PWM_DEV_NAME);
+    if (pwm_dev == RT_NULL)
+    {
+        rt_kprintf("pwm sample run failed! can't find %s device!\n", PWM_DEV_NAME);
+        return RT_ERROR;
+    }
+
+    /* 使能设备 */
+    rt_pwm_enable(pwm_dev, PWM_DEV_CHANNEL);
 
     tid = rt_thread_create("pwm",
                            pwm_led_entry,
@@ -76,6 +87,8 @@ static void pwm_led_sample(int argc, char *argv[])
     {
         rt_thread_startup(tid);
     }
+
+    return 0;
 }
 /* 导出到 msh 命令列表中 */
 MSH_CMD_EXPORT(pwm_led_sample, pwm sample);
