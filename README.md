@@ -52,5 +52,5 @@ RT-Thread online packages
 
 ## 5、联系方式 & 感谢
 
-* 维护：misonyo
-* 主页：https://github.com/misonyo
+* 维护：[misonyo](https://github.com/misonyo)
+* 主页：https://github.com/RT-Thread-packages/peripheral-sample
