@@ -52,7 +52,7 @@ static void serial_thread_entry(void *parameter)
 
 static int uart_sample(int argc, char *argv[])
 {
-    rt_err_t res = RT_EOK;
+    rt_err_t ret = RT_EOK;
     char uart_name[RT_NAME_MAX];
     char str[] = "hello RT-Thread!\r\n";
 
@@ -91,10 +91,10 @@ static int uart_sample(int argc, char *argv[])
     }
     else
     {
-        res = RT_ERROR;
+        ret = RT_ERROR;
     }
 
-    return res;
+    return ret;
 }
 /* 导出到 msh 命令列表中 */
 MSH_CMD_EXPORT(uart_sample, uart device sample);
