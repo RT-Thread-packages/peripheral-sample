@@ -19,14 +19,15 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#define IWDG_DEVICE_NAME    "iwg"
+#define IWDG_DEVICE_NAME    "iwg"    /* 看门狗设备名称 */
 
-static rt_device_t wdg_dev;
+static rt_device_t wdg_dev;         /* 看门狗设备句柄 */
 
 static void idle_hook(void)
 {
     /* 在空闲线程的回调函数里喂狗 */
     rt_device_control(wdg_dev, RT_DEVICE_CTRL_WDT_KEEPALIVE, NULL);
+    rt_kprintf("feed the dog!\n ");
 }
 
 static int iwdg_sample(int argc, char *argv[])
@@ -59,7 +60,7 @@ static int iwdg_sample(int argc, char *argv[])
         return RT_ERROR;
     }
     /* 设置看门狗溢出时间 */
-    ret = rt_device_control(wdg_dev, RT_DEVICE_CTRL_WDT_SET_TIMEOUT, (void *)timeout);
+    ret = rt_device_control(wdg_dev, RT_DEVICE_CTRL_WDT_SET_TIMEOUT, &timeout);
     if (ret != RT_EOK)
     {
         rt_kprintf("set %s timeout failed!\n", device_name);

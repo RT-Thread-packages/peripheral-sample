@@ -17,7 +17,7 @@
 
 #include <rtthread.h>
 
-#define SAMPLE_UART_NAME       "uart2"
+#define SAMPLE_UART_NAME       "uart2"      /* 串口设备名称 */
 
 /* 用于接收消息的信号量 */
 static struct rt_semaphore rx_sem;
@@ -65,7 +65,7 @@ static int uart_sample(int argc, char *argv[])
         rt_strncpy(uart_name, SAMPLE_UART_NAME, RT_NAME_MAX);
     }
 
-    /* 查找系统中的串口设备 */
+    /* 查找串口设备 */
     serial = rt_device_find(uart_name);
     if (!serial)
     {
