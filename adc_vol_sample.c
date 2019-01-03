@@ -8,17 +8,18 @@
  * 2018-11-29     misonyo      first implementation.
  */
 /*
- * 程序清单：这是一个 ADC 设备使用例程
+ * 程序清单： ADC 设备使用例程
  * 例程导出了 adc_sample 命令到控制终端
  * 命令调用格式：adc_sample
  * 程序功能：通过 ADC 设备采样电压值并转换为数值。
+ *           示例代码参考电压为3.3V,分辨率为12位。
 */
 
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#define ADC_DEV_NAME        "adc1"
-#define ADC_DEV_CHANNEL     5
+#define ADC_DEV_NAME        "adc1"      /* ADC 设备名称 */
+#define ADC_DEV_CHANNEL     5           /* ADC 通道 */
 
 static int adc_vol_sample(int argc, char *argv[])
 {
@@ -37,7 +38,7 @@ static int adc_vol_sample(int argc, char *argv[])
     /* 使能设备 */
     ret = rt_adc_enable(adc_dev, ADC_DEV_CHANNEL);
 
-    /* 读取数据 */
+    /* 读取采样值 */
     value = rt_adc_read(adc_dev, ADC_DEV_CHANNEL);
     rt_kprintf("the value is :%d \n", value);
 
@@ -45,7 +46,7 @@ static int adc_vol_sample(int argc, char *argv[])
     vol = value * 330 / 4096;
     rt_kprintf("the voltage is :%d.%02d \n", vol / 100, vol % 100);
 
-    /* 关闭设备 */
+    /* 关闭通道 */
     ret = rt_adc_disable(adc_dev, ADC_DEV_CHANNEL);
 
     return ret;

@@ -24,8 +24,8 @@
 #define AHT10_NORMAL_CMD            0xA8    /* 一般命令 */
 #define AHT10_GET_DATA              0xAC    /* 获取数据命令 */
 
-static struct rt_i2c_bus_device *i2c_bus = RT_NULL;
-static rt_bool_t initialized = RT_FALSE;        /* 传感器初始化状态 */
+static struct rt_i2c_bus_device *i2c_bus = RT_NULL;     /* I2C总线设备句柄 */
+static rt_bool_t initialized = RT_FALSE;                /* 传感器初始化状态 */
 
 /* 写传感器寄存器 */
 static rt_err_t write_reg(struct rt_i2c_bus_device *bus, rt_uint8_t reg, rt_uint8_t *data)
@@ -44,9 +44,13 @@ static rt_err_t write_reg(struct rt_i2c_bus_device *bus, rt_uint8_t reg, rt_uint
 
     /* 调用I2C设备接口传输数据 */
     if (rt_i2c_transfer(bus, &msgs, 1) == 1)
+    {
         return RT_EOK;
+    }
     else
+    {
         return -RT_ERROR;
+    }
 }
 
 /* 读传感器寄存器数据 */
@@ -61,9 +65,13 @@ static rt_err_t read_regs(struct rt_i2c_bus_device *bus, rt_uint8_t len, rt_uint
 
     /* 调用I2C设备接口传输数据 */
     if (rt_i2c_transfer(bus, &msgs, 1) == 1)
+    {
         return RT_EOK;
+    }
     else
+    {
         return -RT_ERROR;
+    }
 }
 
 static void read_temp_humi(float *cur_temp, float *cur_humi)

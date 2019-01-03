@@ -11,13 +11,13 @@
  * 程序清单：这是一个 hwtimer 设备使用例程
  * 例程导出了 hwtimer_sample 命令到控制终端
  * 命令调用格式：hwtimer_sample
- * 程序功能：硬件定时器周期性的打印当前tick值，2次tick值之差也就是定时时间。
+ * 程序功能：硬件定时器超时回调函数周期性的打印当前tick值，2次tick值之差换算为时间等同于定时时间值。
 */
 
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#define HWTIMER_DEV_NAME   "timer0"
+#define HWTIMER_DEV_NAME   "timer0"     /* 定时器名称 */
 
 /* 定时器超时回调函数 */
 static rt_err_t timeout_cb(rt_device_t dev, rt_size_t size)
@@ -31,8 +31,8 @@ static rt_err_t timeout_cb(rt_device_t dev, rt_size_t size)
 static int hwtimer_sample(int argc, char *argv[])
 {
     rt_err_t ret = RT_EOK;
-    rt_hwtimerval_t timeout_s;
-    rt_device_t hw_dev = RT_NULL;
+    rt_hwtimerval_t timeout_s;      /* 定时器超时值 */
+    rt_device_t hw_dev = RT_NULL;   /* 定时器设备句柄 */
     rt_hwtimer_mode_t mode;         /* 定时器模式 */
     rt_uint32_t freq = 10000;       /* 计数频率 */
 
@@ -44,7 +44,7 @@ static int hwtimer_sample(int argc, char *argv[])
         return RT_ERROR;
     }
 
-    /* 打开设备 */
+    /* 以读写方式打开设备 */
     ret = rt_device_open(hw_dev, RT_DEVICE_OFLAG_RDWR);
     if (ret != RT_EOK)
     {
