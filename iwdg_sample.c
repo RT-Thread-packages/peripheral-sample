@@ -8,24 +8,24 @@
  * 2018-09-25     misonyo      first edition.
  */
 /*
- * ³ÌĞòÇåµ¥£ºÕâÊÇÒ»¸ö¶ÀÁ¢¿´ÃÅ¹·Éè±¸Ê¹ÓÃÀı³Ì
- * Àı³Ìµ¼³öÁË iwdg_sample ÃüÁîµ½¿ØÖÆÖÕ¶Ë
- * ÃüÁîµ÷ÓÃ¸ñÊ½£ºiwdg_sample iwg
- * ÃüÁî½âÊÍ£ºÃüÁîµÚ¶ş¸ö²ÎÊıÊÇÒªÊ¹ÓÃµÄ¿´ÃÅ¹·Éè±¸Ãû³Æ£¬Îª¿ÕÔòÊ¹ÓÃÀı³ÌÄ¬ÈÏµÄ¿´ÃÅ¹·Éè±¸¡£
- * ³ÌĞò¹¦ÄÜ£º³ÌĞòÍ¨¹ıÉè±¸Ãû³Æ²éÕÒ¿´ÃÅ¹·Éè±¸£¬È»ºó³õÊ¼»¯Éè±¸²¢ÉèÖÃ¿´ÃÅ¹·Éè±¸Òç³öÊ±¼ä¡£
- *           È»ºóÉèÖÃ¿ÕÏĞÏß³Ì»Øµ÷º¯Êı£¬ÔÚ»Øµ÷º¯ÊıÀï»áÎ¹¹·¡£
+ * ç¨‹åºæ¸…å•ï¼šè¿™æ˜¯ä¸€ä¸ªç‹¬ç«‹çœ‹é—¨ç‹—è®¾å¤‡ä½¿ç”¨ä¾‹ç¨‹
+ * ä¾‹ç¨‹å¯¼å‡ºäº† iwdg_sample å‘½ä»¤åˆ°æ§åˆ¶ç»ˆç«¯
+ * å‘½ä»¤è°ƒç”¨æ ¼å¼ï¼šiwdg_sample iwg
+ * å‘½ä»¤è§£é‡Šï¼šå‘½ä»¤ç¬¬äºŒä¸ªå‚æ•°æ˜¯è¦ä½¿ç”¨çš„çœ‹é—¨ç‹—è®¾å¤‡åç§°ï¼Œä¸ºç©ºåˆ™ä½¿ç”¨ä¾‹ç¨‹é»˜è®¤çš„çœ‹é—¨ç‹—è®¾å¤‡ã€‚
+ * ç¨‹åºåŠŸèƒ½ï¼šç¨‹åºé€šè¿‡è®¾å¤‡åç§°æŸ¥æ‰¾çœ‹é—¨ç‹—è®¾å¤‡ï¼Œç„¶ååˆå§‹åŒ–è®¾å¤‡å¹¶è®¾ç½®çœ‹é—¨ç‹—è®¾å¤‡æº¢å‡ºæ—¶é—´ã€‚
+ *           ç„¶åè®¾ç½®ç©ºé—²çº¿ç¨‹å›è°ƒå‡½æ•°ï¼Œåœ¨å›è°ƒå‡½æ•°é‡Œä¼šå–‚ç‹—ã€‚
 */
 
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#define IWDG_DEVICE_NAME    "iwg"    /* ¿´ÃÅ¹·Éè±¸Ãû³Æ */
+#define IWDG_DEVICE_NAME    "iwg"    /* çœ‹é—¨ç‹—è®¾å¤‡åç§° */
 
-static rt_device_t wdg_dev;         /* ¿´ÃÅ¹·Éè±¸¾ä±ú */
+static rt_device_t wdg_dev;         /* çœ‹é—¨ç‹—è®¾å¤‡å¥æŸ„ */
 
 static void idle_hook(void)
 {
-    /* ÔÚ¿ÕÏĞÏß³ÌµÄ»Øµ÷º¯ÊıÀïÎ¹¹· */
+    /* åœ¨ç©ºé—²çº¿ç¨‹çš„å›è°ƒå‡½æ•°é‡Œå–‚ç‹— */
     rt_device_control(wdg_dev, RT_DEVICE_CTRL_WDT_KEEPALIVE, NULL);
     rt_kprintf("feed the dog!\n ");
 }
@@ -33,10 +33,10 @@ static void idle_hook(void)
 static int iwdg_sample(int argc, char *argv[])
 {
     rt_err_t ret = RT_EOK;
-    rt_uint32_t timeout = 1000;    /* Òç³öÊ±¼ä */
+    rt_uint32_t timeout = 1000;    /* æº¢å‡ºæ—¶é—´ */
     char device_name[RT_NAME_MAX];
 
-    /* ÅĞ¶ÏÃüÁîĞĞ²ÎÊıÊÇ·ñ¸ø¶¨ÁËÉè±¸Ãû³Æ */
+    /* åˆ¤æ–­å‘½ä»¤è¡Œå‚æ•°æ˜¯å¦ç»™å®šäº†è®¾å¤‡åç§° */
     if (argc == 2)
     {
         rt_strncpy(device_name, argv[1], RT_NAME_MAX);
@@ -45,31 +45,31 @@ static int iwdg_sample(int argc, char *argv[])
     {
         rt_strncpy(device_name, IWDG_DEVICE_NAME, RT_NAME_MAX);
     }
-    /* ¸ù¾İÉè±¸Ãû³Æ²éÕÒ¿´ÃÅ¹·Éè±¸£¬»ñÈ¡Éè±¸¾ä±ú */
+    /* æ ¹æ®è®¾å¤‡åç§°æŸ¥æ‰¾çœ‹é—¨ç‹—è®¾å¤‡ï¼Œè·å–è®¾å¤‡å¥æŸ„ */
     wdg_dev = rt_device_find(device_name);
     if (!wdg_dev)
     {
         rt_kprintf("find %s failed!\n", device_name);
         return RT_ERROR;
     }
-    /* ³õÊ¼»¯Éè±¸ */
+    /* åˆå§‹åŒ–è®¾å¤‡ */
     ret = rt_device_init(wdg_dev);
     if (ret != RT_EOK)
     {
         rt_kprintf("initialize %s failed!\n", device_name);
         return RT_ERROR;
     }
-    /* ÉèÖÃ¿´ÃÅ¹·Òç³öÊ±¼ä */
+    /* è®¾ç½®çœ‹é—¨ç‹—æº¢å‡ºæ—¶é—´ */
     ret = rt_device_control(wdg_dev, RT_DEVICE_CTRL_WDT_SET_TIMEOUT, &timeout);
     if (ret != RT_EOK)
     {
         rt_kprintf("set %s timeout failed!\n", device_name);
         return RT_ERROR;
     }
-    /* ÉèÖÃ¿ÕÏĞÏß³Ì»Øµ÷º¯Êı */
+    /* è®¾ç½®ç©ºé—²çº¿ç¨‹å›è°ƒå‡½æ•° */
     rt_thread_idle_sethook(idle_hook);
 
     return ret;
 }
-/* µ¼³öµ½ msh ÃüÁîÁĞ±íÖĞ */
+/* å¯¼å‡ºåˆ° msh å‘½ä»¤åˆ—è¡¨ä¸­ */
 MSH_CMD_EXPORT(iwdg_sample, iwdg sample);

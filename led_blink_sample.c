@@ -8,39 +8,39 @@
  * 2018-09-25     misonyo      first edition.
  */
 /*
- * ³ÌĞòÇåµ¥£ºÕâÊÇÒ»¸öÍ¨¹ıPIN½Å¿ØÖÆLEDÁÁÃğµÄÊ¹ÓÃÀı³Ì
- * Àı³Ìµ¼³öÁË led_sample ÃüÁîµ½¿ØÖÆÖÕ¶Ë
- * ÃüÁîµ÷ÓÃ¸ñÊ½£ºled_sample 41
- * ÃüÁî½âÊÍ£ºÃüÁîµÚ¶ş¸ö²ÎÊıÊÇÒªÊ¹ÓÃµÄPIN½Å±àºÅ£¬Îª¿ÕÔòÊ¹ÓÃÀı³ÌÄ¬ÈÏµÄÒı½Å±àºÅ¡£
- * ³ÌĞò¹¦ÄÜ£º³ÌĞò´´½¨Ò»¸öledÏß³Ì£¬Ïß³ÌÃ¿¸ô1000ms¸Ä±äPIN½Å×´Ì¬£¬´ïµ½¿ØÖÆledµÆ
- *            ÁÁÃğµÄĞ§¹û¡£
+ * ç¨‹åºæ¸…å•ï¼šè¿™æ˜¯ä¸€ä¸ªé€šè¿‡PINè„šæ§åˆ¶LEDäº®ç­çš„ä½¿ç”¨ä¾‹ç¨‹
+ * ä¾‹ç¨‹å¯¼å‡ºäº† led_sample å‘½ä»¤åˆ°æ§åˆ¶ç»ˆç«¯
+ * å‘½ä»¤è°ƒç”¨æ ¼å¼ï¼šled_sample 41
+ * å‘½ä»¤è§£é‡Šï¼šå‘½ä»¤ç¬¬äºŒä¸ªå‚æ•°æ˜¯è¦ä½¿ç”¨çš„PINè„šç¼–å·ï¼Œä¸ºç©ºåˆ™ä½¿ç”¨ä¾‹ç¨‹é»˜è®¤çš„å¼•è„šç¼–å·ã€‚
+ * ç¨‹åºåŠŸèƒ½ï¼šç¨‹åºåˆ›å»ºä¸€ä¸ªledçº¿ç¨‹ï¼Œçº¿ç¨‹æ¯éš”1000msæ”¹å˜PINè„šçŠ¶æ€ï¼Œè¾¾åˆ°æ§åˆ¶ledç¯
+ *            äº®ç­çš„æ•ˆæœã€‚
 */
 
 #include <rtthread.h>
 #include <rtdevice.h>
 #include <stdlib.h>
 
-/* PIN½Å±àºÅ£¬²é¿´Çı¶¯ÎÄ¼şdrv_gpio.cÈ·¶¨ */
+/* PINè„šç¼–å·ï¼ŒæŸ¥çœ‹é©±åŠ¨æ–‡ä»¶drv_gpio.cç¡®å®š */
 #define LED_PIN_NUM    41
 static int pin_num;
 
 static void led_entry(void *parameter)
 {
     int count = 0;
-    /* ÉèÖÃPIN½ÅÄ£Ê½ÎªÊä³ö */
+    /* è®¾ç½®PINè„šæ¨¡å¼ä¸ºè¾“å‡º */
     rt_pin_mode(pin_num, PIN_MODE_OUTPUT);
 
     while (1)
     {
         count++;
         rt_kprintf("thread run count : %d\r\n", count);
-        /* À­µÍPIN½Å */
+        /* æ‹‰ä½PINè„š */
         rt_pin_write(pin_num, PIN_LOW);
         rt_kprintf("led on!\r\n");
-        /* ÑÓÊ±1000ms */
+        /* å»¶æ—¶1000ms */
         rt_thread_mdelay(1000);
 
-        /* À­¸ßPIN½Å */
+        /* æ‹‰é«˜PINè„š */
         rt_pin_write(pin_num, PIN_HIGH);
         rt_kprintf("led off!\r\n");
         rt_thread_mdelay(1000);
@@ -52,7 +52,7 @@ static int led_sample(int argc, char *argv[])
     rt_thread_t tid;
     rt_err_t ret = RT_EOK;
 
-    /* ÅĞ¶ÏÃüÁîĞĞ²ÎÊıÊÇ·ñ¸ø¶¨ÁËPIN½Å±àºÅ */
+    /* åˆ¤æ–­å‘½ä»¤è¡Œå‚æ•°æ˜¯å¦ç»™å®šäº†PINè„šç¼–å· */
     if (argc == 2)
     {
         pin_num = atoi(argv[1]);
@@ -79,5 +79,5 @@ static int led_sample(int argc, char *argv[])
 
     return ret;
 }
-/* µ¼³öµ½ msh ÃüÁîÁĞ±íÖĞ */
+/* å¯¼å‡ºåˆ° msh å‘½ä»¤åˆ—è¡¨ä¸­ */
 MSH_CMD_EXPORT(led_sample, led sample);
