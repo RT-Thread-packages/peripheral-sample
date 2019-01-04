@@ -8,12 +8,12 @@
  * 2018-09-25     misonyo      first edition.
  */
 /*
- * �����嵥������һ��SD���豸��ʹ������
- * ���̵����� sd_sample ��������ն�
- * ������ø�ʽ��sd_sample sd0
- * ������ͣ�����ڶ���������Ҫʹ�õ�SD�豸�����ƣ�Ϊ����ʹ������Ĭ�ϵ�SD�豸��
- * �����ܣ���������һ�����С���������Ȼ��д��SD���У�Ȼ���ڶ�ȡ�ⲿ��д������ݡ�
- *            �Ա�д��Ͷ����������Ƿ�һ�£�һ�����ʾ����������ȷ��
+ * 程序清单：这是一个SD卡设备的使用例程
+ * 例程导出了 sd_sample 命令到控制终端
+ * 命令调用格式：sd_sample sd0
+ * 命令解释：命令第二个参数是要使用的SD设备的名称，为空则使用例程默认的SD设备。
+ * 程序功能：程序会产生一个块大小的随机数，然后写入SD卡中，然后在读取这部分写入的数据。
+ *            对比写入和读出的数据是否一致，一致则表示程序运行正确。
 */
 
 #include <rtthread.h>
@@ -25,7 +25,7 @@
 void fill_buffer(rt_uint8_t *buff, rt_uint32_t buff_length)
 {
     rt_uint32_t index;
-    /* ���������������� */
+    /* 往缓冲区填充随机数 */
     for (index = 0; index < buff_length; index++)
     {
         buff[index] = ((rt_uint8_t)rand()) & 0xff;
@@ -40,7 +40,7 @@ static int sd_sample(int argc, char *argv[])
     rt_uint8_t *write_buff, *read_buff;
     struct rt_device_blk_geometry geo;
     rt_uint8_t block_num;
-    /* �ж������в����Ƿ�������豸���� */
+    /* 判断命令行参数是否给定了设备名称 */
     if (argc == 2)
     {
         rt_strncpy(sd_name, argv[1], RT_NAME_MAX);
@@ -49,14 +49,14 @@ static int sd_sample(int argc, char *argv[])
     {
         rt_strncpy(sd_name, SD_DEVICE_NAME, RT_NAME_MAX);
     }
-    /* �����豸��ȡ�豸��� */
+    /* 查找设备获取设备句柄 */
     sd_device = rt_device_find(sd_name);
     if (sd_device == RT_NULL)
     {
         rt_kprintf("find device %s failed!\n", sd_name);
         return RT_ERROR;
     }
-    /* ���豸 */
+    /* 打开设备 */
     ret = rt_device_open(sd_device, RT_DEVICE_OFLAG_RDWR);
     if (ret != RT_EOK)
     {
@@ -65,7 +65,7 @@ static int sd_sample(int argc, char *argv[])
     }
 
     rt_memset(&geo, 0, sizeof(geo));
-    /* ��ȡ���豸��Ϣ */
+    /* 获取块设备信息 */
     ret = rt_device_control(sd_device, RT_DEVICE_CTRL_BLK_GETGEOME, &geo);
     if (ret != RT_EOK)
     {
@@ -76,7 +76,7 @@ static int sd_sample(int argc, char *argv[])
     rt_kprintf("sector  size : %d byte\n", geo.bytes_per_sector);
     rt_kprintf("sector count : %d \n", geo.sector_count);
     rt_kprintf("block   size : %d byte\n", geo.block_size);
-    /* ׼����д�������ռ䣬��СΪһ���� */
+    /* 准备读写缓冲区空间，大小为一个块 */
     read_buff = rt_malloc(geo.block_size);
     if (read_buff == RT_NULL)
     {
@@ -91,24 +91,24 @@ static int sd_sample(int argc, char *argv[])
         return RT_ERROR;
     }
 
-    /* ���д���ݻ�������Ϊд������׼�� */
+    /* 填充写数据缓冲区，为写操作做准备 */
     fill_buffer(write_buff, geo.block_size);
 
-    /* ��д���ݻ��������д��SD���У���СΪһ���飬size�����Կ�Ϊ��λ */
+    /* 把写数据缓冲的数据写入SD卡中，大小为一个块，size参数以块为单位 */
     block_num = rt_device_write(sd_device, 0, write_buff, 1);
     if (1 != block_num)
     {
         rt_kprintf("write device %s failed!\n", sd_name);
     }
 
-    /* ��SD���ж������ݣ��������ڶ����ݻ������� */
+    /* 从SD卡中读出数据，并保存在读数据缓冲区中 */
     block_num = rt_device_read(sd_device, 0, read_buff, 1);
     if (1 != block_num)
     {
         rt_kprintf("read %s device failed!\n", sd_name);
     }
 
-    /* �Ƚ�д���ݻ������Ͷ����ݻ������������Ƿ���ȫһ�� */
+    /* 比较写数据缓冲区和读数据缓冲区的内容是否完全一致 */
     if (rt_memcmp(write_buff, read_buff, geo.block_size) == 0)
     {
         rt_kprintf("Block test OK!\n");
@@ -117,11 +117,11 @@ static int sd_sample(int argc, char *argv[])
     {
         rt_kprintf("Block test Fail!\n");
     }
-    /* �ͷŻ������ռ� */
+    /* 释放缓冲区空间 */
     rt_free(read_buff);
     rt_free(write_buff);
 
     return RT_EOK;
 }
-/* ������ msh �����б��� */
+/* 导出到 msh 命令列表中 */
 MSH_CMD_EXPORT(sd_sample, sd device sample);
