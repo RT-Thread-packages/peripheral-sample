@@ -12,7 +12,7 @@
  * 例程导出了 adc_sample 命令到控制终端
  * 命令调用格式：adc_sample
  * 程序功能：通过 ADC 设备采样电压值并转换为数值。
- *           示例代码参考电压为3.3V,分辨率为12位。
+ *           示例代码参考电压为3.3V,转换位数为12位。
 */
 
 #include <rtthread.h>
@@ -20,6 +20,8 @@
 
 #define ADC_DEV_NAME        "adc1"      /* ADC 设备名称 */
 #define ADC_DEV_CHANNEL     5           /* ADC 通道 */
+#define REFER_VOLTAGE       330         /* 参考电压 3.3V,数据精度乘以100保留2位小数*/
+#define CONVERT_BITS        (1 << 12)   /* 转换位数为12位 */
 
 static int adc_vol_sample(int argc, char *argv[])
 {
@@ -42,8 +44,8 @@ static int adc_vol_sample(int argc, char *argv[])
     value = rt_adc_read(adc_dev, ADC_DEV_CHANNEL);
     rt_kprintf("the value is :%d \n", value);
 
-    /* 转换为对应电压值,3.3V对应12位最大值4096,数据精度乘以100保留2位小数 */
-    vol = value * 330 / 4096;
+    /* 转换为对应电压值 */
+    vol = value * REFER_VOLTAGE / CONVERT_BITS;
     rt_kprintf("the voltage is :%d.%02d \n", vol / 100, vol % 100);
 
     /* 关闭通道 */
