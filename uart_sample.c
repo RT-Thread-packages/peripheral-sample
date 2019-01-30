@@ -75,8 +75,8 @@ static int uart_sample(int argc, char *argv[])
 
     /* 初始化信号量 */
     rt_sem_init(&rx_sem, "rx_sem", 0, RT_IPC_FLAG_FIFO);
-    /* 以读写及中断接收方式打开串口设备 */
-    rt_device_open(serial, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
+    /* 以中断接收及轮询发送方式打开串口设备 */
+    rt_device_open(serial, RT_DEVICE_FLAG_INT_RX);
     /* 设置接收回调函数 */
     rt_device_set_rx_indicate(serial, uart_input);
     /* 发送字符串 */
