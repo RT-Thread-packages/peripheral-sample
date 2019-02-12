@@ -18,7 +18,7 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#define AHT10_I2C_BUS_NAME          "i2c1"  /* 传感器连接的I2C总线设备名称 */
+#define AHT10_I2C_BUS_NAME          "i2c2"  /* 传感器连接的I2C总线设备名称 */
 #define AHT10_ADDR                  0x38    /* 从机地址 */
 #define AHT10_CALIBRATION_CMD       0xE1    /* 校准命令 */
 #define AHT10_NORMAL_CMD            0xA8    /* 一般命令 */

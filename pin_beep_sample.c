@@ -19,10 +19,10 @@
 
 /* 引脚编号，通过查看驱动文件drv_gpio.c确定 */
 #ifndef BEEP_PIN_NUM
-    #define BEEP_PIN_NUM            35  /* PB0 */
+    #define BEEP_PIN_NUM            37  /* PB2 */
 #endif
 #ifndef KEY0_PIN_NUM
-    #define KEY0_PIN_NUM            55  /* PD8 */
+    #define KEY0_PIN_NUM            57  /* PD10 */
 #endif
 #ifndef KEY1_PIN_NUM
     #define KEY1_PIN_NUM            56  /* PD9 */
