@@ -51,14 +51,14 @@ static void pin_beep_sample(void)
 
     /* 按键0引脚为输入模式 */
     rt_pin_mode(KEY0_PIN_NUM, PIN_MODE_INPUT_PULLUP);
-    /* 绑定中断，上升沿模式，回调函数名为beep_on */
+    /* 绑定中断，下降沿模式，回调函数名为beep_on */
     rt_pin_attach_irq(KEY0_PIN_NUM, PIN_IRQ_MODE_FALLING, beep_on, RT_NULL);
     /* 使能中断 */
     rt_pin_irq_enable(KEY0_PIN_NUM, PIN_IRQ_ENABLE);
 
     /* 按键1引脚为输入模式 */
     rt_pin_mode(KEY1_PIN_NUM, PIN_MODE_INPUT_PULLUP);
-    /* 绑定中断，上升沿模式，回调函数名为beep_off */
+    /* 绑定中断，下降沿模式，回调函数名为beep_off */
     rt_pin_attach_irq(KEY1_PIN_NUM, PIN_IRQ_MODE_FALLING, beep_off, RT_NULL);
     /* 使能中断 */
     rt_pin_irq_enable(KEY1_PIN_NUM, PIN_IRQ_ENABLE);
