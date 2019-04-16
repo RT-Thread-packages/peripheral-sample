@@ -4,8 +4,6 @@ src   = []
 cwd   = GetCurrentDir()
 include_path = [cwd]
 
-# add kernel samples.
-
 if GetDepend('PERIPHERAL_SAMPLES_USING_ADC'):
     src += ['adc_vol_sample.c']
 
@@ -35,6 +33,9 @@ if GetDepend('PERIPHERAL_SAMPLES_USING_SD'):
 
 if GetDepend('PERIPHERAL_SAMPLES_USING_SERIAL'):
     src += Glob('uart_sample.c')
+
+if GetDepend('PERIPHERAL_SAMPLES_USING_SERIAL_DMA'):
+    src += Glob('uart_dma_sample.c')
 
 if GetDepend('PERIPHERAL_SAMPLES_USING_SPI'):
     src += Glob('spi_w25q_sample.c')

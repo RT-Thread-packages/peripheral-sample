@@ -80,7 +80,7 @@ static void read_temp_humi(float *cur_temp, float *cur_humi)
 
     write_reg(i2c_bus, AHT10_GET_DATA, 0);      /* 发送命令 */
     rt_thread_mdelay(400);
-	read_regs(i2c_bus, 6, temp);                /* 获取传感器数据 */
+    read_regs(i2c_bus, 6, temp);                /* 获取传感器数据 */
 
     /* 湿度数据转换 */
     *cur_humi = (temp[1] << 12 | temp[2] << 4 | (temp[3] & 0xf0) >> 4) * 100.0 / (1 << 20);
