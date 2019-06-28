@@ -7,6 +7,9 @@ include_path = [cwd]
 if GetDepend('PERIPHERAL_SAMPLES_USING_ADC'):
     src += ['adc_vol_sample.c']
 
+if GetDepend('PERIPHERAL_SAMPLES_USING_CAN'):
+    src += ['can_sample.c']
+
 if GetDepend('PERIPHERAL_SAMPLES_USING_HWTIMER'):
     src += ['hwtimer_sample.c']
 
