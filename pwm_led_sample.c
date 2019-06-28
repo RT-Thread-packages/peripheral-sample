@@ -17,7 +17,6 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 
-#define LED_PIN_NUM         57      /* LED PIN脚编号，查看驱动文件drv_gpio.c确定 */
 #define PWM_DEV_NAME        "pwm3"  /* PWM设备名称 */
 #define PWM_DEV_CHANNEL     4       /* PWM通道 */
 
@@ -31,11 +30,6 @@ static int pwm_led_sample(int argc, char *argv[])
     dir = 1;            /* PWM脉冲宽度值的增减方向 */
     pulse = 0;          /* PWM脉冲宽度值，单位为纳秒ns */
 
-    /* 设置LED引脚脚模式为输出 */
-    rt_pin_mode(LED_PIN_NUM, PIN_MODE_OUTPUT);
-    /* 拉高LED引脚 */
-    rt_pin_write(LED_PIN_NUM, PIN_HIGH);
-    
     /* 查找设备 */
     pwm_dev = (struct rt_device_pwm *)rt_device_find(PWM_DEV_NAME);
     if (pwm_dev == RT_NULL)
