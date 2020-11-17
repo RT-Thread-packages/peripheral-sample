@@ -1,37 +1,39 @@
 # peripheral samples package
 
-## 1、介绍
+[中文页](README_ZH.md) | English
 
-这个软件包包含一些外设设备操作的例程。
+## 1. Introduction
 
-### 1.1 例程说明
+This package contains some routines for the operation of peripheral devices.
 
-| 文件             | 说明                            |
+### 1.1 Example description
+
+| File | Description |
 | ---------------- | ------------------------------- |
-| adc_vol_sample.c       | 使用 ADC 设备转换电压数据 |
-| hwtimer_sample.c       | 使用 硬件定时器定时 |
-| i2c_aht10_sample.c     | 使用 i2c 设备获取 aht10 温湿度传感器数据 |
-| iwdg_sample.c          | 看门狗设备使用示例 |
-| led_blink_sample.c     |  使用 pin 设备控制 LED 闪烁 |
-| pin_beep_sample.c      | 使用 pin 设备控制蜂鸣器 |
-| pwm_led_sample.c       | 使用 pwm 设备控制 LED 的亮度 |
-| rtc_sample.c           | 使用 rtc 设备设置年月日时分秒信息 |
-| sd_sample.c            | 块设备 SD 卡使用示例  |
-| spi_w25q_sample.c      | 使用 spi 设备读取 W25Q ID |
-| uart_sample.c          | 使用 serial 设备中断接收及轮询发送模式收发数据 |
-| uart_dma_sample.c      | 使用 serial 设备 DMA 接收及轮询发送模式收发数据 |
+| adc_vol_sample.c | Use ADC device to convert voltage data |
+| hwtimer_sample.c | Use hardware timer timing |
+| i2c_aht10_sample.c | Use i2c device to obtain aht10 temperature and humidity sensor data |
+| iwdg_sample.c | Watchdog device usage example |
+| led_blink_sample.c | Use pin device to control LED blinking |
+| pin_beep_sample.c | Use pin device to control buzzer |
+| pwm_led_sample.c | Use pwm device to control LED brightness |
+| rtc_sample.c | Use rtc device to set year, month, day, hour, minute and second information |
+| sd_sample.c | Block device SD card usage example |
+| spi_w25q_sample.c | Use spi device to read W25Q ID |
+| uart_sample.c | Send and receive data using serial device interrupt receiving and polling sending mode |
+| uart_dma_sample.c | Use serial device DMA reception and polling transmission mode to send and receive data |
 
-### 1.2 许可证
+### 1.2 License
 
-peripheral samples package 遵循 Apache license v2.0 许可，详见 `LICENSE` 文件。
+The peripheral samples package complies with the Apache license v2.0, see the `LICENSE` file for details.
 
-### 1.3 依赖
+### 1.3 Dependency
 
-依赖设备管理模块提供的设备驱动。
+Depend on the device driver provided by the device management module.
 
-## 2、如何打开 peripheral samples package
+## 2. How to open the peripheral samples package
 
-使用 peripheral samples package 需要在 RT-Thread 的包管理器中选择它，具体路径如下：
+To use the peripheral samples package, you need to select it in the RT-Thread package manager. The specific path is as follows:
 
 ```
 RT-Thread online packages
@@ -40,17 +42,17 @@ RT-Thread online packages
             a peripheral_samples package for rt-thread --->
 ```
 
-然后让 RT-Thread 的包管理器自动更新，或者使用 `pkgs --update` 命令更新包到 BSP 中。
+Then let the RT-Thread package manager automatically update, or use the `pkgs --update` command to update the package to the BSP.
 
-## 3、使用 peripheral samples package
+## 3. Use peripheral samples package
 
-在打开 peripheral samples package 后，当进行 BSP 编译时，选择的软件包相关源代码会被加入到 BSP 工程中进行编译。
+After opening the peripheral samples package, when the BSP is compiled, the relevant source code of the selected software package will be added to the BSP project for compilation.
 
-## 4、注意事项
+## 4. Matters needing attention
 
-暂无。
+Nothing.
 
-## 5、联系方式 & 感谢
+## 5. Contact & Thanks
 
-* 维护：[misonyo](https://github.com/misonyo)
-* 主页：https://github.com/RT-Thread-packages/peripheral-sample
+* Maintenance: [misonyo](https://github.com/misonyo)
+* Homepage: https://github.com/RT-Thread-packages/peripheral-sample
