@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2018, RT-Thread Development Team
+ * Copyright (c) 2006-2022, RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -82,7 +82,7 @@ int can_sample(int argc, char *argv[])
     rt_size_t  size;
     rt_thread_t thread;
     char can_name[RT_NAME_MAX];
-    
+
     if (argc == 2)
     {
         rt_strncpy(can_name, argv[1], RT_NAME_MAX);
@@ -135,7 +135,7 @@ int can_sample(int argc, char *argv[])
     {
         rt_kprintf("can dev write data failed!\n");
     }
-    
+
     return res;
 }
 /* 导出到 msh 命令列表中 */

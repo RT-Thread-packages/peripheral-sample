@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2018, RT-Thread Development Team
+ * Copyright (c) 2006-2022, RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -102,7 +102,7 @@ static int uart_dma_sample(int argc, char *argv[])
                sizeof(struct rx_msg),    /* 一条消息的最大长度 */
                sizeof(msg_pool),         /* 存放消息的缓冲区大小 */
                RT_IPC_FLAG_FIFO);        /* 如果有多个线程等待，按照先来先得到的方法分配消息 */
-    
+
     /* 以 DMA 接收及轮询发送方式打开串口设备 */
     rt_device_open(serial, RT_DEVICE_FLAG_DMA_RX);
     /* 设置接收回调函数 */
