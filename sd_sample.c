@@ -121,6 +121,17 @@ static int sd_sample(int argc, char *argv[])
     rt_free(read_buff);
     rt_free(write_buff);
 
+    ret = rt_device_close(sd_device);
+    if(ret != RT_EOK)
+    {
+        rt_kprintf("close device %s failed!\n", sd_name);
+        return ret;
+    }
+    else
+    {
+        rt_kprintf("close device %s ok!\n", sd_name);
+    }
+
     return RT_EOK;
 }
 /* 导出到 msh 命令列表中 */
