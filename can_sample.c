@@ -59,7 +59,11 @@ static void can_rx_thread(void *parameter)
     while (1)
     {
         /* hdr值为-1，表示直接从uselist链表读取数据 */
+#if (RTTHREAD_VERSION >= RT_VERSION_CHECK(5, 1, 0))
         rxmsg.hdr_index = -1;
+#else
+        rxmsg.hdr = -1;
+#endif
         /* 阻塞等待接收信号量 */
         rt_sem_take(&rx_sem, RT_WAITING_FOREVER);
         /* 从CAN读取一帧数据 */
