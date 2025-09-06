@@ -59,7 +59,7 @@ static void serial_thread_entry(void *parameter)
         rt_memset(&msg, 0, sizeof(msg));
         /* 从消息队列中读取消息*/
         result = rt_mq_recv(&rx_mq, &msg, sizeof(msg), RT_WAITING_FOREVER);
-        if (result == RT_EOK)
+        if (result > 0)
         {
             /* 从串口读取数据*/
             rx_length = rt_device_read(msg.dev, 0, rx_buffer, msg.size);
