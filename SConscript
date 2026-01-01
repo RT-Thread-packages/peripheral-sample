@@ -11,7 +11,10 @@ if GetDepend('PERIPHERAL_SAMPLES_USING_CAN'):
     src += ['can_sample.c']
 
 if GetDepend('PERIPHERAL_SAMPLES_USING_HWTIMER'):
-    src += ['hwtimer_sample.c']
+    if GetDepend('RT_USING_CLOCK_TIME'): # if use the clock_time subsystem
+        src += ['clock_timer_sample.c']
+    else:
+        src += ['hwtimer_sample.c']
 
 if GetDepend('PERIPHERAL_SAMPLES_USING_I2C'):
     src += ['i2c_aht10_sample.c']

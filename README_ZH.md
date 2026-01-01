@@ -11,7 +11,8 @@
 | 文件             | 说明                            |
 | ---------------- | ------------------------------- |
 | adc_vol_sample.c       | 使用 ADC 设备转换电压数据 |
-| hwtimer_sample.c       | 使用 硬件定时器定时 |
+| clock_timer_sample.c   | 使用 clock_timer 设备定时（RT_USING_CLOCK_TIME=y） |
+| hwtimer_sample.c       | 使用硬件定时器定时（RT_USING_CLOCK_TIME=n） |
 | i2c_aht10_sample.c     | 使用 i2c 设备获取 aht10 温湿度传感器数据 |
 | iwdg_sample.c          | 看门狗设备使用示例 |
 | led_blink_sample.c     |  使用 pin 设备控制 LED 闪烁 |

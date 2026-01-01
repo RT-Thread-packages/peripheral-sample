@@ -11,7 +11,8 @@ This package contains some routines for the operation of peripheral devices.
 | File | Description |
 | ---------------- | ------------------------------- |
 | adc_vol_sample.c | Use ADC device to convert voltage data |
-| hwtimer_sample.c | Use hardware timer timing |
+| clock_timer_sample.c | Use clock timer timing (RT_USING_CLOCK_TIME=y) |
+| hwtimer_sample.c | Use hardware timer timing (RT_USING_CLOCK_TIME=n) |
 | i2c_aht10_sample.c | Use i2c device to obtain aht10 temperature and humidity sensor data |
 | iwdg_sample.c | Watchdog device usage example |
 | led_blink_sample.c | Use pin device to control LED blinking |
